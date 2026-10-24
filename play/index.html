@@ -1,0 +1,16 @@
+<!doctype html><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Open video</title>
+<body style="font-family:sans-serif;background:#111;color:#fff;text-align:center;padding:24px">
+<h2>🥭 Open video</h2><p id="u" style="color:#bbb;word-break:break-all;font-size:14px">No video link found.</p>
+<a id="c" style="display:block;background:#ff9800;color:#111;font-weight:700;padding:16px;border-radius:14px;text-decoration:none;margin:14px 0">Open with… (choose app)</a>
+<a id="m" style="display:block;background:#333;color:#fff;padding:14px;border-radius:14px;text-decoration:none">Play directly in Mango</a>
+<script>
+var q=location.search,i=q.indexOf('url='),v='';
+if(i>=0){var r=q.substring(i+4);if(/^https?:\/\//i.test(r))v=r;else{try{v=decodeURIComponent(r.split('&title=')[0])}catch(e){}}}
+if(v){document.getElementById('u').textContent=v;var m=v.match(/^(https?):\/\/(.*)$/i),p=v.split('?')[0].toLowerCase(),
+t=/\.m3u8$/.test(p)?'application/x-mpegURL':/\.mkv$/.test(p)?'video/x-matroska':/\.webm$/.test(p)?'video/webm':'video/mp4';
+var c='intent://'+m[2].split('#')[0]+'#Intent;scheme='+m[1].toLowerCase()+';action=android.intent.action.VIEW;type='+t+';end',
+d='intent://play?url='+encodeURIComponent(v)+'#Intent;scheme=mango;package=com.example.mango;end';
+document.getElementById('c').href=c;document.getElementById('m').href=d;setTimeout(function(){location.href=c},300)}
+else{document.getElementById('c').style.display=document.getElementById('m').style.display='none'}
+</script>
